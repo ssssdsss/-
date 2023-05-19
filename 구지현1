@@ -1,0 +1,45 @@
+import tkinter as tk
+from tkinter import LEFT, WORD, BOTH, INSERT, END
+from tkinter.filedialog import askopenfile, asksaveasfile
+
+def saveFile():
+    new_File = asksaveasfile(mode='w', filetype=[('text files', '.txt')])
+    if new_File is None:
+        return
+    text= str(entry.get(1.0, END))
+    new_File.write(text)
+    new_File.close()
+
+def openFile():
+    file = askopenfile(mode='r', filetype=[('text files', '*.txt')])
+    if file is not None:
+        content = file.read()
+    entry.insert(INSERT, content)
+
+def clearFile():
+    entry.delete(1.0, END)
+
+
+canvas = tk.Tk()
+canvas.geometry("480x600")
+canvas.title("notepad")
+canvas.config(bg="white")
+top = tk.Frame(canvas)
+top.pack(padx=10, pady=5, anchor='nw')
+
+b1 = tk.Button(canvas, text="Open", bg="white", command=openFile)
+b1.pack(in_=top, side=LEFT)
+
+b2 = tk.Button(canvas, text="Save", bg="white", command=saveFile)
+b2.pack(in_=top, side=LEFT)
+
+b3 = tk.Button(canvas, text="Clear", bg="white", command=clearFile)
+b3.pack(in_=top, side=LEFT)
+
+b4 = tk.Button(canvas, text="Exit", bg="white", command=exit)
+b4.pack(in_=top, side=LEFT)
+
+entry = tk.Text(canvas, wrap=WORD, bg="#F9DDA4", font=("Arial", 15))
+entry.pack(padx=10, pady=5, expand=True, fill=BOTH)
+
+canvas.mainloop()
